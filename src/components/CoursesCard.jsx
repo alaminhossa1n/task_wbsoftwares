@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const CoursesCard = ({ course }) => {
   const { course_name, photo, regular_price, discount_price, trainer_data } =
     course;
@@ -10,14 +12,13 @@ const CoursesCard = ({ course }) => {
     100;
 
   const handleAddToCart = () => {
-    let existingData = JSON.parse(localStorage.getItem("courses")) || [];
+    let existingData = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const isDuplicate = existingData.some((item) => item.id === course.id);
-
-    if (!isDuplicate) {
-      existingData.push(course);
-
-      localStorage.setItem("courses", JSON.stringify(existingData));
+    if (existingData.length > 0) {
+      () => toast("Already in the cart!");
+    } else {
+      course.quantity = 1;
+      localStorage.setItem("cart", JSON.stringify(course));
     }
   };
 

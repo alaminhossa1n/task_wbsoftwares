@@ -17,12 +17,7 @@ const NavbarTop = () => {
   const [userData, , refetch] = useUser();
   const imgUrl = `https://littleaccount.com/uploads/userProfile/`;
 
-  const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    const storedCourses = JSON.parse(localStorage.getItem("courses")) || [];
-    setCourses(storedCourses); 
-  }, []);
+  const [courses] = useState(JSON.parse(localStorage.getItem("cart")));
 
   const handleLogout = async () => {
     try {
@@ -83,7 +78,7 @@ const NavbarTop = () => {
             <p className="text-black text-2xl">
               <FaShoppingCart />
             </p>
-            <p className="text-black">{courses?.length}</p>
+            <p className="text-black">{courses ? "1" : "0"}</p>
           </div>
 
           <div className="flex flex-col items-center justify-center text-text_sm font-semibold relative group">
