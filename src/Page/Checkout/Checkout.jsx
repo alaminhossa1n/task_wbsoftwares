@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import CourseTableRow from "../../components/CourseTableRow";
 import { useState } from "react";
+import axios from "axios";
 
 const Checkout = () => {
   const course = JSON.parse(localStorage.getItem("cart")) || [];
@@ -14,22 +15,60 @@ const Checkout = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    // Generate a unique order ID
-    const orderId = `ORD-${Date.now()}`;
-
+  const onSubmit = async (data) => {
     const formData = new FormData();
-    
-    // Append form data (other inputs)
-    formData.append("name", data.name); // example for text fields
 
-    // Append file data
-    formData.append("photo", data.photo[0]);
+    if (data.photo && data.photo.length > 0) {
+      formData.append("photo", data.photo[0]);
+    }
 
-    console.log("Form Data Submitted: ", formData);
+    formData.append("course_id", course.id);
+    formData.append("course_fee", course.regular_price);
+    formData.append("course_qty", course.quantity);
+    formData.append(
+      "total_course_fee",
+      course.discount_price * course.quantity
+    );
+    formData.append("discount_course_fee", course.discount_price);
+    formData.append(
+      "sub_total_course_fee",
+      course.discount_price * course.quantity
+    );
+    formData.append("admission_date", new Date());
+
+    formData.append("name", data.name);
+    formData.append("father_name", data.father_name);
+    formData.append("father_phone_no", data.father_phone_no);
+    formData.append("school_collage_name", data.school_collage_name);
+    formData.append("job_title", data.job_title);
+    formData.append("email", data.email);
+    formData.append("gender", data.gender);
+    formData.append("present_address", data.present_address);
+    formData.append("permanent_address", data.permanent_address);
+    formData.append("nid_no", data.nid_no);
+    formData.append("phone_no", data.phone_no);
+    formData.append("local_guardian_name", data.local_guardian_name);
+    formData.append("local_guardian_phone_no", data.local_guardian_phone_no);
+    formData.append("date_of_birth", data.date_of_birth);
+    formData.append("blood_group", data.blood_group);
+
+    fetch("https://itder.com/api/course-purchase", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("Success:", result);
+        reset();
+        localStorage.removeItem("cart");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -387,16 +426,13 @@ const Checkout = () => {
                 className="w-full border border-gray-300 rounded-md p-2"
                 {...register("photo", {
                   required: "File is required",
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: "File is required",
-                  },
                 })}
               />
               {errors.photo && (
                 <p className="text-red-600">{errors.photo.message}</p>
               )}
             </div>
+
             <div>
               <label
                 htmlFor="gender"
