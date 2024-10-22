@@ -10,8 +10,8 @@ const CoursesCard = ({ course }) => {
     <div className=" bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="relative">
         <img
-          src="https://itderbd.nextwebservice.com/storage/uploads/course/7674951728743412.jpg"
-          alt=""
+          src={photo}
+          alt="Course Photo"
         />
         <div className="absolute top-0 left-0 p-2">
           <h3 className="text-white text-xl font-bold">{course_name}</h3>

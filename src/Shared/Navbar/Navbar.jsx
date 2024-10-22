@@ -25,6 +25,7 @@ const Navbar = () => {
   return (
     <div className="bg-bg_primary">
       <div className="navbar max-w-7xl mx-auto px-0 py-4">
+
         <div className="navbar-start flex justify-between w-full lg:justify-start lg:w-2/12 ml-2 lg:ml-0">
           <div className="dropdown lg:hidden">
             <div tabIndex={0} role="button" className="">
@@ -44,6 +45,7 @@ const Navbar = () => {
             <img src={logo} className="w-28" alt="" />
           </Link>
         </div>
+
         <div className="navbar-end hidden lg:flex lg:flex-1 ">
           <ul className="flex items-center justify-end gap-gap_primary px-0 w-full">
             <li>
@@ -193,6 +195,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
+        
       </div>
       <div
         className={`lg:hidden fixed top-48 ${
@@ -201,6 +204,7 @@ const Navbar = () => {
       >
         <MenuBar></MenuBar>
       </div>
+
     </div>
   );
 };
