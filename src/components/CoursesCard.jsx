@@ -4,15 +4,27 @@ const CoursesCard = ({ course }) => {
 
   const { name } = trainer_data;
 
-  const percentage = ((parseInt(regular_price) - parseInt(discount_price)) / parseInt(regular_price)) * 100;
+  const percentage =
+    ((parseInt(regular_price) - parseInt(discount_price)) /
+      parseInt(regular_price)) *
+    100;
+
+  const handleAddToCart = () => {
+    let existingData = JSON.parse(localStorage.getItem("courses")) || [];
+
+    const isDuplicate = existingData.some((item) => item.id === course.id);
+
+    if (!isDuplicate) {
+      existingData.push(course);
+
+      localStorage.setItem("courses", JSON.stringify(existingData));
+    }
+  };
 
   return (
     <div className=" bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="relative">
-        <img
-          src={photo}
-          alt="Course Photo"
-        />
+        <img src={photo} alt="Course Photo" />
         <div className="absolute top-0 left-0 p-2">
           <h3 className="text-white text-xl font-bold">{course_name}</h3>
         </div>
@@ -25,9 +37,7 @@ const CoursesCard = ({ course }) => {
           <span className="flex text-blue-500 text-md">
             ★★★★★(no need to change)
           </span>
-          <span className="ml-2 text-gray-600 text-md font-bold">
-            {name}
-          </span>
+          <span className="ml-2 text-gray-600 text-md font-bold">{name}</span>
         </div>
         {/* <div className="flex gap-2 mb-4 flex-wrap">
                                   {['Photography', 'Light set up', 'Camera angle', 'Self Development'].map((tag) => (
@@ -56,7 +66,10 @@ const CoursesCard = ({ course }) => {
           {/* <span className="text-green-600 text-sm">Earn Tk 48</span> */}
         </div>
         <div className="mt-4 flex gap-2">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-500 w-full font-bold text-md">
+          <button
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-500 w-full font-bold text-md"
+            onClick={handleAddToCart}
+          >
             Add To Cart
           </button>
         </div>

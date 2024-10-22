@@ -1,5 +1,5 @@
 import { MdMenu } from "react-icons/md";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../../ContextAPIs/OrderProvider";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
@@ -16,6 +16,13 @@ const NavbarTop = () => {
   const navigate = useNavigate();
   const [userData, , refetch] = useUser();
   const imgUrl = `https://littleaccount.com/uploads/userProfile/`;
+
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const storedCourses = JSON.parse(localStorage.getItem("courses")) || [];
+    setCourses(storedCourses); 
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -76,7 +83,7 @@ const NavbarTop = () => {
             <p className="text-black text-2xl">
               <FaShoppingCart />
             </p>
-            <p className="text-black">1</p>
+            <p className="text-black">{courses?.length}</p>
           </div>
 
           <div className="flex flex-col items-center justify-center text-text_sm font-semibold relative group">
