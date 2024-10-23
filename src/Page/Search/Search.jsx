@@ -36,6 +36,7 @@ const Search = () => {
 
   if (data.status_code == 201) {
     toast.success("Data Fetch Successfully. Check the console.");
+    console.log(data);
   }
 
   return (
