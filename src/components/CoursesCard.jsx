@@ -15,8 +15,9 @@ const CoursesCard = ({ course }) => {
     let existingData = JSON.parse(localStorage.getItem("cart")) || [];
 
     if (existingData.length > 0) {
-      () => toast("Already in the cart!");
+      toast.error("Error message!");
     } else {
+      toast.success("Added to cart");
       course.quantity = 1;
       localStorage.setItem("cart", JSON.stringify(course));
     }

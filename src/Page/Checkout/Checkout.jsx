@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import CourseTableRow from "../../components/CourseTableRow";
 import { useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 
 const Checkout = () => {
@@ -64,13 +63,13 @@ const Checkout = () => {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
-        toast.success(reset.message);
         localStorage.setItem(
           "order",
           JSON.stringify(result.coursePurchaseData)
         );
         localStorage.removeItem("cart");
         reset();
+        toast.success(reset.message);
       })
       .catch((error) => {
         console.error("Error:", error);

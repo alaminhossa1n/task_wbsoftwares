@@ -8,8 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import OrderProvider from "./ContextAPIs/OrderProvider";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import BasicProvider from "./ContextAPIs/BasicProvider.jsx";
-import 'aos/dist/aos.css';
-
+import "aos/dist/aos.css";
 
 const queryClient = new QueryClient();
 

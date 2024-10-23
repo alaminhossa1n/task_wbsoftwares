@@ -1,8 +1,7 @@
-import TrackOrder from "./TrackOrder";
 
 const OrderDetails = () => {
   const order = JSON.parse(localStorage.getItem("order"));
-  const { name, id, present_address, phone_no, admission_date, total_course_fee, gender,discount_course_fee,form_no } =
+  const { name, id, present_address, phone_no, admission_date, total_course_fee, gender,discount_course_fee,form_no,photo } =
     order;
 
   return (
@@ -113,7 +112,7 @@ const OrderDetails = () => {
                   <td className="border text-center w-10 h-12 px-2">
                     <img
                       className=" w-full h-full object-cover mx-auto"
-                      src=""
+                      src={photo}
                       alt=""
                     />
                   </td>

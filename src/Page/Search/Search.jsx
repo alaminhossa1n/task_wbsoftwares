@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Search = () => {
   const [formData, setFormData] = useState({
     form_no: "",
     phone_no: "",
   });
+
+  const [data, setData] = useState("");
 
   // Handle input change
   const handleInputChange = (e) => {
@@ -27,12 +30,17 @@ const Search = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => setData(data))
       .catch((error) => console.error("Error:", error));
   };
+
+  if (data.status_code == 201) {
+    toast.success("Data Fetch Successfully. Check the console.");
+  }
+
   return (
     <div className="mt-10">
-        <h1 className="text-center font-bold text-3xl">Search Here</h1>
+      <h1 className="text-center font-bold text-3xl">Search Here</h1>
       <form
         onSubmit={handleSearch}
         className="p-4 border rounded-lg w-1/2 mx-auto"
