@@ -1,33 +1,81 @@
-import React, { useState } from "react";
-import { IoMdSearch } from "react-icons/io";
+import { useState } from "react";
 
 const Search = () => {
-    const [searchTerm, setSearchTerm] = useState("");
+  const [formData, setFormData] = useState({
+    form_no: "",
+    phone_no: "",
+  });
 
-    const handleSearch = () => {
-        // Handle the search logic here
-        console.log("Searching for:", searchTerm);
-    };
+  // Handle input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    return (
-        <div className="min-h-screen flex flex-col text-text_40px font-bold items-center justify-center">
-            <h1 className="w-[600px] mx-auto">Search here</h1>
-            <div className="h-[52px] relative col-span-4 w-[600px] mx-auto">
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="search"
-                    className="text-black px-2 w-full block h-full outline-0 rounded-[4px] border"
-                />
-                <IoMdSearch
+  // Search handler function
+  const handleSearch = (e) => {
+    e.preventDefault();
 
-                    className="text-2xl text-black absolute right-2 top-2"
-                />
-            </div> 
-
+    fetch("https://itder.com/api/search-purchase-data", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error:", error));
+  };
+  return (
+    <div className="mt-10">
+        <h1 className="text-center font-bold text-3xl">Search Here</h1>
+      <form
+        onSubmit={handleSearch}
+        className="p-4 border rounded-lg w-1/2 mx-auto"
+      >
+        <div className="mb-4">
+          <label htmlFor="form_no" className="block font-semibold mb-2">
+            Form No:
+          </label>
+          <input
+            type="text"
+            id="form_no"
+            name="form_no"
+            value={formData.form_no}
+            onChange={handleInputChange}
+            className="w-full border border-gray-300 p-2 rounded"
+            required
+          />
         </div>
-         
-    );
+
+        <div className="mb-4">
+          <label htmlFor="phone_no" className="block font-semibold mb-2">
+            Phone No:
+          </label>
+          <input
+            type="text"
+            id="phone_no"
+            name="phone_no"
+            value={formData.phone_no}
+            onChange={handleInputChange}
+            className="w-full border border-gray-300 p-2 rounded"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default Search;
