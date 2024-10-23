@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import CourseTableRow from "../../components/CourseTableRow";
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
   const course = JSON.parse(localStorage.getItem("cart")) || [];
@@ -63,8 +64,13 @@ const Checkout = () => {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
-        reset();
+        toast.success(reset.message);
+        localStorage.setItem(
+          "order",
+          JSON.stringify(result.coursePurchaseData)
+        );
         localStorage.removeItem("cart");
+        reset();
       })
       .catch((error) => {
         console.error("Error:", error);
